@@ -95,6 +95,8 @@ def play_song(track_id, track_name, album_cover_url, track_duration, artist_name
     window = tk.Tk()
     window.title("Spotify Player")
     window.geometry("500x600")
+    window.configure(bg="#1DB954")
+    window.iconbitmap('spotify.ico')
 
     cover_section = tk.Frame(window, width=500, height=450)
     cover_section.pack(fill="both", expand=True)
@@ -139,7 +141,7 @@ def play_song(track_id, track_name, album_cover_url, track_duration, artist_name
     play_icon_tk = ImageTk.PhotoImage(play_icon)
     pause_icon_tk = ImageTk.PhotoImage(pause_icon)
 
-    # Increase button size by setting width and height
+
     play_button = tk.Button(info_section, image=play_icon_tk, bg="green", fg="white", width=30, height=30)
     play_button.place(relx=0.5, rely=0.5, anchor="center")
 
@@ -151,14 +153,13 @@ def play_song(track_id, track_name, album_cover_url, track_duration, artist_name
 
     progress_rect = progress_canvas.create_rectangle(0, 0, 0, 10, fill="#1DB954", outline="")
 
-    # Adding a draggable progress dot
-    progress_dot = progress_canvas.create_oval(0, 0, 10, 10, fill="white", outline="white", width=2)
+
+    progress_dot = progress_canvas.create_oval(20, 20, 20, 20, fill="white", outline="white", width=2)
 
     current_time_label = tk.Label(info_section, text="0:00", fg="white", bg="black", font=("Helvetica", 10))
     current_time_label.place(relx=0.05, rely=0.85, anchor="w")
 
-    total_time_label = tk.Label(info_section, text=time.strftime('%M:%S', time.gmtime(track_duration)), fg="white",
-                                bg="black", font=("Helvetica", 10))
+    total_time_label = tk.Label(info_section, text=time.strftime('%M:%S', time.gmtime(track_duration)), fg="white", bg="black", font=("Helvetica", 10))
     total_time_label.place(relx=0.95, rely=0.85, anchor="e")
 
     def update_progress_bar():
@@ -171,8 +172,12 @@ def play_song(track_id, track_name, album_cover_url, track_duration, artist_name
                         current_time = playback['progress_ms'] / 1000
                         progress_width = 5 + ((current_time / track_duration) * 370)
                         progress_canvas.coords(progress_rect, 0, 0, progress_width, 10)
-                        progress_canvas.coords(progress_dot, progress_width - 5, 0, progress_width + 5, 10)
+
+
+                        progress_canvas.coords(progress_dot, progress_width - 5, -5, progress_width + 5, 15)
+
                         current_time_label.config(text=time.strftime('%M:%S', time.gmtime(current_time)))
+
                 time.sleep(0.1)
             except Exception as e:
                 print(f"Error updating progress bar: {e}")
@@ -195,7 +200,7 @@ def play_song(track_id, track_name, album_cover_url, track_duration, artist_name
             position_ms = int(track_duration * 1000 * click_position)
             try:
                 sp.seek_track(position_ms)
-                progress_canvas.coords(progress_dot, event.x - 5, 0, event.x + 5, 10)
+                progress_canvas.coords(progress_dot, event.x - 5, -5, event.x + 5, 15)
             except Exception as e:
                 print(f"Error dragging progress dot: {e}")
 
