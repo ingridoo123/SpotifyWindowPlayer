@@ -10,11 +10,15 @@ import time
 import threading
 import numpy as np
 from collections import Counter
+import json
 
-# Spotify authorization data
-CLIENT_ID = 'c4a6e2bf89d649ba962b193c17d3aa1c'
-CLIENT_SECRET = '564a6705ebb442b7a4958e8a28480b3b'
-REDIRECT_URI = 'http://localhost:8888/callback'
+
+with open('secrets.json') as f:
+    secrets = json.load(f)
+
+CLIENT_ID = secrets["CLIENT_ID"]
+CLIENT_SECRET = secrets["CLIENT_SECRET"]
+REDIRECT_URI = secrets["REDIRECT_URI"]
 SCOPE = 'user-library-read user-read-playback-state user-modify-playback-state'
 
 # Spotify authorization
