@@ -1,1 +1,1 @@
-![Opis obrazu](ścieżka/do/obrazu)
+![Opis obrazu](spotify_player.png)
